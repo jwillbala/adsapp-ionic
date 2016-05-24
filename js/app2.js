@@ -83,3 +83,34 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             $urlRouterProvider.otherwise('/tab/dash');
 
         });
+
+angular.module('starter', ['ionic', 'ngCordova']);
+
+example.controller("ExampleController", function ($scope, $cordovaContacts) {
+
+    $scope.getContactList = function () {
+
+        $cordovaContacts.find({filter: ''}).then(function (result) {
+            $scope.contacts = result;
+        }, function (error) {
+            console.log("ERROR: " + error);
+        });
+    }
+
+    $scope.createContact = function () {
+        $cordovaContacts.save({"displayName": "Steve Jobs"}).then(function (result) {
+            console.log(JSON.stringify(result));
+        }, function (error) {
+            console.log(error);
+        });
+    }
+
+    $scope.removeContact = function () {
+        $cordovaContacts.remove({"displayName": "Steve Jobs"}).then(function (result) {
+            console.log(JSON.stringify(result));
+        }, function (error) {
+            console.log(error);
+        });
+    }
+
+});
